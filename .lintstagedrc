@@ -1,0 +1,4 @@
+{
+  "*.{js,jsx,ts,tsx}": "expo lint",
+  "**/*": ["prettier --write --ignore-unknown"]
+}

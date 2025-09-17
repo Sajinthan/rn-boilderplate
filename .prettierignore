@@ -1,0 +1,32 @@
+# Ignore artifacts:
+build
+coverage
+dist
+node_modules
+
+# Ignore generated files:
+*.log
+*.tgz
+*.tar.gz
+
+# Ignore config files that shouldn't be formatted:
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Expo/React Native specific
+.expo/
+.expo-shared/
+*.mobileprovision
+*.p8
+*.p12
+*.key
+*.cer
+*.pem
+*.crt
+
+# Metro
+.metro-health-check*
+
+# Ignore assets
+assets/
