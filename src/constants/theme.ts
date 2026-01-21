@@ -5,6 +5,49 @@
 
 import { Platform } from 'react-native';
 
+// ============================================
+// SHADOWS
+// ============================================
+
+/**
+ * Shadow definitions for React Native
+ * NativeWind doesn't fully support RN shadow syntax, so we need inline styles
+ *
+ * Usage:
+ * import { SHADOWS } from '@/constants/theme';
+ * <View style={SHADOWS.calm}>...</View>
+ */
+export const SHADOWS = {
+  calm: {
+    shadowColor: '#292F3C',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 3,
+  },
+  calmLg: {
+    shadowColor: '#292F3C',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 24,
+    elevation: 5,
+  },
+  calmXl: {
+    shadowColor: '#292F3C',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.1,
+    shadowRadius: 48,
+    elevation: 8,
+  },
+  none: {
+    shadowColor: 'transparent',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+} as const;
+
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
 
