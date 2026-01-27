@@ -2,8 +2,8 @@ import packageJson from './package.json';
 
 export default {
   expo: {
-    name: 'rn-boilerplate',
-    slug: 'rn-boilerplate',
+    name: 'focus-flow',
+    slug: 'focus-flow',
     version: packageJson.version,
     orientation: 'portrait',
     icon: './src/assets/images/icon.png',
