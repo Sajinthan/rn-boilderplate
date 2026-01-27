@@ -16,19 +16,19 @@ These tasks have no dependencies and should be completed first.
   - Set spacing and border radius values
   - Files: `src/constants/theme.ts`, `tailwind.config.js`, `src/global.css`, `src/app/_layout.tsx`
 
-- [ ] **Task 3: Create Zustand store for app settings**
+- [x] **Task 3: Create Zustand store for app settings**
   - State: defaultStrictMode, soundEnabled, vibrationEnabled, darkMode, durations
   - Actions: updateSetting, resetToDefaults
   - Persist to AsyncStorage
   - File: `src/stores/settings-store.ts`
 
-- [ ] **Task 4: Create Zustand store for timer state**
+- [x] **Task 4: Create Zustand store for timer state**
   - State: status, currentTask, isStrictMode, timeRemaining, sessionType
   - Actions: commitToTask, startSession, pauseSession, tick, endSession, startBreak
   - Computed: progress, formattedTime
   - File: `src/stores/timer-store.ts`
 
-- [ ] **Task 5: Create Zustand store for session history**
+- [x] **Task 5: Create Zustand store for session history**
   - Types: Session, SessionOutcome, IncompleteReason
   - State: sessions array
   - Actions: addSession, getSessionsForDate, getTodayStats, getWeekStats
@@ -145,12 +145,12 @@ Final enhancements for production readiness.
 
 | Phase                   | Tasks  | Completed |
 | ----------------------- | ------ | --------- |
-| Phase 1: Foundation     | 4      | 1         |
+| Phase 1: Foundation     | 4      | 4         |
 | Phase 2: Core Structure | 3      | 0         |
 | Phase 3: Main Screens   | 5      | 0         |
 | Phase 4: Session Flow   | 2      | 0         |
 | Phase 5: Polish         | 2      | 0         |
-| **Total**               | **16** | **1**     |
+| **Total**               | **16** | **4**     |
 
 ---
 
