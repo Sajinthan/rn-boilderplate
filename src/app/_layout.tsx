@@ -1,5 +1,11 @@
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  useFonts,
+} from '@expo-google-fonts/inter';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -53,20 +59,20 @@ export default function RootLayout() {
   const isDark = colorScheme === 'dark';
 
   // Load Inter font
-  const [fontsLoaded] = useFonts({
-    Inter: require('@expo-google-fonts/inter/Inter_400Regular.ttf'),
-    'Inter-Medium': require('@expo-google-fonts/inter/Inter_500Medium.ttf'),
-    'Inter-SemiBold': require('@expo-google-fonts/inter/Inter_600SemiBold.ttf'),
-    'Inter-Bold': require('@expo-google-fonts/inter/Inter_700Bold.ttf'),
+  const [fontsLoaded, fontError] = useFonts({
+    'Inter-Regular': Inter_400Regular,
+    'Inter-Medium': Inter_500Medium,
+    'Inter-SemiBold': Inter_600SemiBold,
+    'Inter-Bold': Inter_700Bold,
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
+    if (fontsLoaded || fontError) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 
