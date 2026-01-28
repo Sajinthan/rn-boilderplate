@@ -78,14 +78,13 @@ Start a focus session with task commitment.
 
 Active timer with progress visualization.
 
-- [ ] **Task 8: Build circular progress ring component**
+- [x] **Task 8: Build circular progress ring component**
   - SVG-based circular progress indicator
   - Size: 280px, stroke width: 4px
   - Background stroke: muted color, progress stroke: primary color
   - Rotation: -90deg (starts from top), stroke-linecap: round
   - Props: progress (0-1), size, strokeWidth, children (for centered timer text)
-  - Animated with react-native-reanimated (0.5s ease on stroke-dashoffset)
-  - File: `src/components/ProgressRing.tsx`
+  - File: `src/components/ProgressRing/index.tsx`
 
 - [ ] **Task 9: Build Focus Session screen with timer**
   - Label: "FOCUSING ON" (uppercase, muted)
@@ -177,11 +176,11 @@ Enhancements for production readiness.
 | Phase 1: Foundation         | 2      | 2         |
 | Phase 2: Settings Feature   | 2      | 2         |
 | Phase 3: Task Commitment    | 3      | 3         |
-| Phase 4: Focus Session      | 2      | 0         |
+| Phase 4: Focus Session      | 2      | 1         |
 | Phase 5: Session Completion | 3      | 1         |
 | Phase 6: History Feature    | 1      | 0         |
 | Phase 7: Polish             | 3      | 0         |
-| **Total**                   | **16** | **8**     |
+| **Total**                   | **16** | **9**     |
 
 ---
 

@@ -8,6 +8,7 @@ export { default as TimePicker } from './TimePicker';
 export { default as Toast, showErrorToast } from './Toast';
 export { default as BackButton } from './BackButton';
 export { default as ModeSelectionModal, type ModeSelectionModalProps } from './ModeSelectionModal';
+export { default as ProgressRing, type ProgressRingProps } from './ProgressRing';
 
 // Layout Components
 export { default as BottomSheetWrapper } from './BottomSheetWrapper';
