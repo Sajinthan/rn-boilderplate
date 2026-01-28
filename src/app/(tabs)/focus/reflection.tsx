@@ -1,17 +1,22 @@
+import { router } from 'expo-router';
 import { AlertTriangle, Check, X } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import Button from '@/components/Button';
+import { TimerDefaults } from '@/constants/theme';
 import { useColors } from '@/hooks/use-colors';
 import { cn } from '@/lib/utils';
-import { SessionOutcome } from '@/stores/session-store';
+import { type IncompleteReason, type SessionOutcome, reasonLabels, useSessionStore } from '@/stores/session-store';
 import { useTimerStore } from '@/stores/timer-store';
 
 /**
- * Reflection Screen
+ * Reflection/Accountability Screen
  * Displayed after a focus session ends.
- * Allows user to reflect on session outcome.
+ * User selects an outcome, optionally picks a reason for incomplete sessions,
+ * and chooses to continue with the same task, start a new task, or end.
+ * Session data is saved to history before navigating.
  */
 
 interface OutcomeOption {
@@ -26,14 +31,77 @@ const outcomeOptions: OutcomeOption[] = [
   { value: 'not_completed', label: 'Not completed', Icon: X },
 ];
 
+const reasonOptions: { value: IncompleteReason; label: string }[] = [
+  { value: 'distracted', label: reasonLabels.distracted },
+  { value: 'task_too_big', label: reasonLabels.task_too_big },
+  { value: 'low_energy', label: reasonLabels.low_energy },
+  { value: 'interrupted', label: reasonLabels.interrupted },
+];
+
 export default function ReflectionScreen() {
   const colors = useColors();
+
+  // Timer store state and actions
   const currentTask = useTimerStore(state => state.currentTask);
+  const isStrictMode = useTimerStore(state => state.isStrictMode);
+  const sessionStartTime = useTimerStore(state => state.sessionStartTime);
+  const continueWithSameTask = useTimerStore(state => state.continueWithSameTask);
+  const startNewTask = useTimerStore(state => state.startNewTask);
+  const reset = useTimerStore(state => state.reset);
+
+  // Session store action
+  const addSession = useSessionStore(state => state.addSession);
 
   const [selectedOutcome, setSelectedOutcome] = useState<SessionOutcome | null>(null);
+  const [selectedReason, setSelectedReason] = useState<IncompleteReason | null>(null);
+
+  const showReasons = selectedOutcome === 'partial' || selectedOutcome === 'not_completed';
 
   const handleOutcomeSelect = (outcome: SessionOutcome) => {
     setSelectedOutcome(outcome);
+    // Clear reason when switching to completed
+    if (outcome === 'completed') {
+      setSelectedReason(null);
+    }
+  };
+
+  const toggleReason = (reason: IncompleteReason) => {
+    setSelectedReason(prev => (prev === reason ? null : reason));
+  };
+
+  /** Build and persist session to history */
+  const saveSession = () => {
+    if (!selectedOutcome || !currentTask) return;
+
+    const now = new Date();
+    addSession({
+      taskName: currentTask.name,
+      successCriteria: currentTask.successCriteria,
+      startTime: sessionStartTime?.toISOString() ?? now.toISOString(),
+      endTime: now.toISOString(),
+      durationMinutes: TimerDefaults.focusDuration,
+      outcome: selectedOutcome,
+      reason: showReasons ? (selectedReason ?? undefined) : undefined,
+      isStrictMode,
+    });
+  };
+
+  const handleContinue = () => {
+    saveSession();
+    continueWithSameTask();
+    router.replace('/(tabs)/focus/session');
+  };
+
+  const handleNewTask = () => {
+    saveSession();
+    startNewTask();
+    router.replace('/(tabs)/focus');
+  };
+
+  const handleEnd = () => {
+    saveSession();
+    reset();
+    router.replace('/(tabs)/focus');
   };
 
   const getOutcomeButtonStyles = (outcome: SessionOutcome) => {
@@ -47,7 +115,6 @@ export default function ReflectionScreen() {
       };
     }
 
-    // Selected styles differ based on outcome type
     if (outcome === 'completed') {
       return {
         container: 'border-primary bg-primary/5',
@@ -66,20 +133,20 @@ export default function ReflectionScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background" edges={['top', 'bottom']}>
-      {/* Header section */}
-      <View className="pt-8 px-6 mb-12">
-        <Text className="text-helper text-muted-foreground mb-2">Session complete</Text>
-        <Text className="text-title text-foreground" numberOfLines={2}>
-          {currentTask?.name || 'Your task'}
-        </Text>
-      </View>
+      <ScrollView className="flex-1 px-6 py-12" contentContainerStyle={{ flexGrow: 1 }}>
+        {/* Header section */}
+        <View className="pt-8 mb-12">
+          <Text className="text-title text-foreground mb-2">Session complete</Text>
+          <Text className="text-heading text-muted-foreground" numberOfLines={2}>
+            {currentTask?.name || 'Your task'}
+          </Text>
+        </View>
 
-      {/* Question and outcome selection */}
-      <View className="px-6">
-        <Text className="text-heading text-foreground mb-8">Did you achieve what you set out to do?</Text>
+        {/* Question */}
+        <Text className="text-body text-foreground mb-8">Did you achieve what you set out to do?</Text>
 
         {/* Outcome buttons */}
-        <View className="gap-3">
+        <View className="gap-3 mb-8">
           {outcomeOptions.map(option => {
             const styles = getOutcomeButtonStyles(option.value);
             const { Icon } = option;
@@ -89,7 +156,7 @@ export default function ReflectionScreen() {
                 key={option.value}
                 onPress={() => handleOutcomeSelect(option.value)}
                 activeOpacity={0.7}
-                className={cn('flex-row items-center p-4 rounded-xl border-2', styles.container)}
+                className={cn('flex-row items-center gap-4 p-4 rounded-xl border-2', styles.container)}
               >
                 {/* Icon container */}
                 <View className={cn('w-10 h-10 rounded-full items-center justify-center', styles.iconBg)}>
@@ -97,12 +164,64 @@ export default function ReflectionScreen() {
                 </View>
 
                 {/* Label */}
-                <Text className="text-body font-medium text-foreground ml-4">{option.label}</Text>
+                <Text className="text-body font-medium text-foreground">{option.label}</Text>
               </TouchableOpacity>
             );
           })}
         </View>
-      </View>
+
+        {/* Reason chips (shown for partial/not completed) */}
+        {showReasons && (
+          <View className="mb-8">
+            <Text className="text-body text-muted-foreground mb-4">What got in the way? (optional)</Text>
+            <View className="flex-row flex-wrap gap-2">
+              {reasonOptions.map(({ value, label }) => {
+                const isChipSelected = selectedReason === value;
+                return (
+                  <TouchableOpacity
+                    key={value}
+                    activeOpacity={0.7}
+                    onPress={() => toggleReason(value)}
+                    className={cn('px-4 py-2 rounded-lg', isChipSelected ? 'bg-primary' : 'bg-muted')}
+                  >
+                    <Text
+                      className={cn(
+                        'text-sm font-medium',
+                        isChipSelected ? 'text-primary-foreground' : 'text-muted-foreground',
+                      )}
+                    >
+                      {label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+
+        {/* Actions */}
+        <View className="pt-8 space-y-3">
+          <Button title="Continue" onPress={handleContinue} disabled={!selectedOutcome} className="h-14" />
+
+          <View className="flex-row items-center justify-center gap-3">
+            <TouchableOpacity
+              onPress={handleNewTask}
+              disabled={!selectedOutcome}
+              className={cn('py-3', !selectedOutcome && 'opacity-50')}
+            >
+              <Text className="text-helper text-muted-foreground">New task</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={handleEnd}
+              disabled={!selectedOutcome}
+              className={cn('py-3', !selectedOutcome && 'opacity-50')}
+            >
+              <Text className="text-helper text-muted-foreground">End</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
