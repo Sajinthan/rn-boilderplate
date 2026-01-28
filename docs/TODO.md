@@ -63,14 +63,14 @@ Start a focus session with task commitment.
   - "Start now" button and "Schedule start" link
   - File: `src/app/(tabs)/focus/index.tsx`
 
-- [ ] **Task 7: Build Mode Selection modal**
+- [x] **Task 7: Build Mode Selection modal**
   - Title: "Choose your mode"
   - Flexible mode: "You can end the session early if needed."
   - Strict mode: "Session runs until completion. Helps build discipline." + "Recommended" badge
   - Mode cards with radio selection indicator
   - Respects default from settings
   - Confirm button: "Begin session"
-  - File: `src/components/ModeSelectionModal.tsx`
+  - File: `src/components/ModeSelectionModal/index.tsx`
 
 ---
 
@@ -176,12 +176,12 @@ Enhancements for production readiness.
 | --------------------------- | ------ | --------- |
 | Phase 1: Foundation         | 2      | 2         |
 | Phase 2: Settings Feature   | 2      | 2         |
-| Phase 3: Task Commitment    | 3      | 2         |
+| Phase 3: Task Commitment    | 3      | 3         |
 | Phase 4: Focus Session      | 2      | 0         |
 | Phase 5: Session Completion | 3      | 1         |
 | Phase 6: History Feature    | 1      | 0         |
 | Phase 7: Polish             | 3      | 0         |
-| **Total**                   | **16** | **7**     |
+| **Total**                   | **16** | **8**     |
 
 ---
 

@@ -7,6 +7,7 @@ export { default as DatePicker } from './DatePicker';
 export { default as TimePicker } from './TimePicker';
 export { default as Toast, showErrorToast } from './Toast';
 export { default as BackButton } from './BackButton';
+export { default as ModeSelectionModal, type ModeSelectionModalProps } from './ModeSelectionModal';
 
 // Layout Components
 export { default as BottomSheetWrapper } from './BottomSheetWrapper';
