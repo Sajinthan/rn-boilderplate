@@ -13,8 +13,9 @@ import { useEffect } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 
-import { getColors } from '@/hooks/use-colors';
+import KeyboardAwareWrapper from '@/components/KeyboardAwareWrapper';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { getColors } from '@/hooks/use-colors';
 
 import '../global.css';
 
@@ -80,14 +81,16 @@ export default function RootLayout() {
   }
 
   return (
-    <View className={`flex-1 ${isDark ? 'dark' : ''}`}>
-      <ThemeProvider value={isDark ? FocusFlowDarkTheme : FocusFlowLightTheme}>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-      </ThemeProvider>
-    </View>
+    <KeyboardAwareWrapper>
+      <View className={`flex-1 ${isDark ? 'dark' : ''}`}>
+        <ThemeProvider value={isDark ? FocusFlowDarkTheme : FocusFlowLightTheme}>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+          <StatusBar style={isDark ? 'light' : 'dark'} />
+        </ThemeProvider>
+      </View>
+    </KeyboardAwareWrapper>
   );
 }
