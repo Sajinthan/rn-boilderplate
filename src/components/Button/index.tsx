@@ -80,10 +80,9 @@ const Button: React.FC<ButtonProps> = ({
     <TouchableOpacity
       onPress={onPress}
       className={cn(
-        'flex w-full flex-row items-center justify-center rounded-2xl p-4 shadow-lg shadow-primary/25',
+        'flex w-full flex-row items-center justify-center rounded-xl p-4',
         getBgVariantStyle(variant),
-        variant === 'text' && 'w-auto p-0 shadow-none',
-        variant === 'outline' && 'shadow-sm',
+        variant === 'text' && 'w-auto p-0',
         disabled && 'opacity-50',
         className,
       )}
@@ -100,14 +99,7 @@ const Button: React.FC<ButtonProps> = ({
         )
       )}
       {title && (
-        <Text
-          className={cn(
-            'text-lg font-semibold',
-            getTextVariantStyle(variant),
-            isLoading && 'ml-2',
-            textClassName,
-          )}
-        >
+        <Text className={cn('text-button', getTextVariantStyle(variant), isLoading && 'ml-2', textClassName)}>
           {title}
         </Text>
       )}

@@ -17,7 +17,7 @@ These tasks have no dependencies and should be completed first.
   - Files: `src/constants/theme.ts`, `tailwind.config.js`, `src/global.css`, `src/app/_layout.tsx`
 
 - [x] **Task 3: Create Zustand store for app settings**
-  - State: defaultStrictMode, soundEnabled, vibrationEnabled, darkMode, durations
+  - State: defaultStrictMode, soundAndVibrationEnabled, darkModeEnabled
   - Actions: updateSetting, resetToDefaults
   - Persist to AsyncStorage
   - File: `src/stores/settings-store.ts`
@@ -49,14 +49,20 @@ Complete after Phase 1 foundation is in place.
 
 - [ ] **Task 9: Build circular progress ring component** _(blocked by: #1)_
   - SVG-based circular progress indicator
-  - Props: progress, size, strokeWidth, children
-  - Animated with react-native-reanimated
+  - Size: 280px, stroke width: 4px
+  - Background stroke: muted color, progress stroke: primary color
+  - Rotation: -90deg (starts from top), stroke-linecap: round
+  - Props: progress (0-1), size, strokeWidth, children (for centered timer text)
+  - Animated with react-native-reanimated (0.5s ease on stroke-dashoffset)
   - File: `src/components/ProgressRing.tsx`
 
 - [ ] **Task 7: Build Mode Selection modal** _(blocked by: #1, #3)_
-  - Flexible vs Strict mode choice
-  - Mode cards with selection state
+  - Title: "Choose your mode"
+  - Flexible mode: "You can end the session early if needed."
+  - Strict mode: "Session runs until completion. Helps build discipline." + "Recommended" badge
+  - Mode cards with radio selection indicator
   - Respects default from settings
+  - Confirm button: "Begin session"
   - File: `src/components/ModeSelectionModal.tsx`
 
 ---
@@ -66,37 +72,45 @@ Complete after Phase 1 foundation is in place.
 Core app screens - complete after Phase 2.
 
 - [ ] **Task 6: Build Task Commitment screen** _(blocked by: #1, #2, #4)_
-  - Task name input (required)
-  - Success criteria input (optional)
-  - "Start now" and "Schedule start" buttons
+  - Heading: "What are you working on?"
+  - Task name input (required, placeholder: "Enter your task")
+  - Success criteria input (optional, placeholder: "What does success look like? (optional)")
+  - Helper text: "One task. One session."
+  - "Start now" button and "Schedule start" link
   - File: `src/app/(tabs)/focus/index.tsx`
 
 - [ ] **Task 8: Build Focus Session screen with timer** _(blocked by: #4, #9)_
-  - Task name display
+  - Label: "FOCUSING ON" (uppercase, muted)
+  - Task name display (heading style)
   - Large circular timer with progress ring
-  - "End session" option (disabled in strict mode)
+  - "End session" text link (hidden in strict mode)
   - Timer logic with setInterval
+  - Hide bottom navigation
   - File: `src/app/(tabs)/focus/session.tsx`
 
 - [ ] **Task 12: Build History screen with session list** _(blocked by: #2, #5)_
-  - Today's summary card
-  - Filter tabs: Today / 7 days
-  - Session list with outcomes
+  - Title: "History"
+  - Summary card: "Today" / "X / Y" / "sessions completed"
+  - Filter chips: "Today", "7 days"
+  - Session list with task name, time, outcome icon in circular background
   - Empty state handling
   - File: `src/app/(tabs)/history/index.tsx`
 
 - [ ] **Task 13: Build Settings screen** _(blocked by: #2, #3)_
-  - Timer duration settings
-  - Preference toggles (strict mode, sound, vibration)
-  - Dark mode selector
-  - About section and version
-  - Clear data option
+  - Toggle: Default to strict mode (with "Prevent early session exit" description)
+  - Toggle: Sound & vibration (combined, with "Session start and end alerts" description)
+  - Toggle: Dark mode (with "Easier on the eyes" description)
+  - About card: "No account required. All data stays on your device."
+  - Version display
   - File: `src/app/(tabs)/settings/index.tsx`
 
 - [ ] **Task 11: Build Reflection/Accountability screen** _(blocked by: #4, #5)_
-  - Outcome selection: Completed, Partial, Not completed
-  - Reason chips for incomplete sessions
-  - Continue, New task, End actions
+  - Header: "Session complete" with task name
+  - Question: "Did you achieve what you set out to do?"
+  - Outcome buttons: "Completed", "Partially completed", "Not completed"
+  - Reason chips (optional): "Distracted", "Task too big", "Low energy", "Interrupted"
+  - Reasons prompt: "What got in the way? (optional)"
+  - Actions: "Continue" button, "New task" link, "End" link
   - Save session to history
   - File: `src/app/(tabs)/focus/reflection.tsx`
 
@@ -107,10 +121,12 @@ Core app screens - complete after Phase 2.
 Complete the full session experience.
 
 - [ ] **Task 10: Build Break screen** _(blocked by: #4, #8)_
-  - Break timer display
-  - "Step away. Rest your mind." message
+  - Header: "BREAK" (uppercase)
+  - Timer display without progress ring
+  - Message: "Step away. Rest your mind."
+  - Muted background color
   - Skip break option
-  - Different visual treatment from focus
+  - Hide bottom navigation
   - File: `src/app/(tabs)/focus/break.tsx`
 
 - [ ] **Task 16: Build schedule start time picker** _(blocked by: #4, #6)_

@@ -3,14 +3,12 @@ import { Clock, History, Settings } from 'lucide-react-native';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useColorScheme } from '@/src/hooks/use-color-scheme';
-import { Colors, Layout } from '@/src/constants/theme';
+import { Layout } from '@/constants/theme';
+import { useColors } from '@/hooks/use-colors';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const colors = useColors();
   const insets = useSafeAreaInsets();
-  const colors = isDark ? Colors.dark : Colors.light;
 
   // Tab bar height: 80px + safe area bottom
   const tabBarHeight = Layout.navHeight + (Platform.OS === 'ios' ? 0 : insets.bottom);
@@ -19,8 +17,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.tabIconSelected,
-        tabBarInactiveTintColor: colors.tabIconDefault,
+        tabBarActiveTintColor: colors.foreground,
+        tabBarInactiveTintColor: colors.mutedForeground,
         tabBarShowLabel: true,
         tabBarLabelStyle: {
           fontFamily: 'Inter-Medium',
@@ -29,8 +27,7 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           height: tabBarHeight,
-          paddingTop: 12,
-          paddingBottom: Platform.OS === 'ios' ? insets.bottom : 12,
+          paddingTop: 8,
           backgroundColor: colors.background,
           borderTopColor: colors.border,
           borderTopWidth: 1,

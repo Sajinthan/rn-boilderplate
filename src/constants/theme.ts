@@ -1,67 +1,12 @@
 /**
  * Focus Flow Design System
- * Theme colors, shadows, and constants following the design spec
+ * Theme constants following the design spec
+ *
+ * COLORS: Defined in src/global.css as CSS variables (single source of truth)
+ * Use the useColors() hook from @/hooks/use-colors for programmatic color access
  */
 
 import { Platform } from 'react-native';
-
-// ============================================
-// COLOR PALETTE
-// ============================================
-
-/**
- * Primary green accent color in HSL
- * hsl(142, 71%, 45%) = #22C55E
- */
-export const PRIMARY_GREEN = '#22C55E';
-
-/**
- * Color tokens for light and dark modes
- * Usage: Use CSS variables via NativeWind classes (bg-background, text-foreground, etc.)
- * These constants are for reference and programmatic access
- */
-export const Colors = {
-  light: {
-    background: '#FFFFFF',
-    foreground: '#0A0A0A',
-    muted: '#F5F5F5',
-    mutedForeground: '#737373',
-    primary: PRIMARY_GREEN,
-    primaryForeground: '#FFFFFF',
-    secondary: '#F5F5F5',
-    secondaryForeground: '#0A0A0A',
-    border: '#E5E5E5',
-    input: '#E5E5E5',
-    ring: PRIMARY_GREEN,
-    // Semantic
-    success: PRIMARY_GREEN,
-    warning: '#F59E0B',
-    destructive: '#737373', // Muted, not red - calm design
-    // Tab bar
-    tabIconDefault: '#737373',
-    tabIconSelected: PRIMARY_GREEN,
-  },
-  dark: {
-    background: '#0A0A0A',
-    foreground: '#F5F5F5',
-    muted: '#1F1F1F',
-    mutedForeground: '#8C8C8C',
-    primary: PRIMARY_GREEN,
-    primaryForeground: '#FFFFFF',
-    secondary: '#1F1F1F',
-    secondaryForeground: '#F5F5F5',
-    border: '#282828',
-    input: '#282828',
-    ring: PRIMARY_GREEN,
-    // Semantic
-    success: PRIMARY_GREEN,
-    warning: '#F59E0B',
-    destructive: '#8C8C8C', // Muted, not red - calm design
-    // Tab bar
-    tabIconDefault: '#8C8C8C',
-    tabIconSelected: PRIMARY_GREEN,
-  },
-} as const;
 
 // ============================================
 // SHADOWS
@@ -110,17 +55,20 @@ export const SHADOWS = {
 // LAYOUT CONSTANTS
 // ============================================
 
+/**
+ * Layout values needed for programmatic calculations.
+ * For styling, prefer Tailwind/NativeWind classes (e.g., className="h-20 px-6").
+ * These are for: SVG calculations, animations, platform-specific logic.
+ */
 export const Layout = {
-  /** Bottom navigation height */
+  /** Bottom navigation height - for safe area calculations */
   navHeight: 80,
-  /** Content container max width */
+  /** Content container max width - for centering logic */
   maxWidth: 480,
-  /** Horizontal screen padding */
-  screenPadding: 16,
-  /** Border radius default */
-  radius: 12,
-  radiusMd: 10,
-  radiusSm: 8,
+  /** Progress ring size - for SVG calculations */
+  progressRingSize: 280,
+  /** Progress ring stroke width - for SVG calculations */
+  progressRingStroke: 4,
 } as const;
 
 // ============================================

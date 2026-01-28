@@ -13,8 +13,8 @@ import { useEffect } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/src/hooks/use-color-scheme';
-import { Colors } from '@/src/constants/theme';
+import { getColors } from '@/hooks/use-colors';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 import '../global.css';
 
@@ -28,16 +28,19 @@ export const unstable_settings = {
 /**
  * Custom navigation theme matching the Focus Flow design system
  */
+const lightColors = getColors('light');
+const darkColors = getColors('dark');
+
 const FocusFlowLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: Colors.light.primary,
-    background: Colors.light.background,
-    card: Colors.light.background,
-    text: Colors.light.foreground,
-    border: Colors.light.border,
-    notification: Colors.light.primary,
+    primary: lightColors.primary,
+    background: lightColors.background,
+    card: lightColors.background,
+    text: lightColors.foreground,
+    border: lightColors.border,
+    notification: lightColors.primary,
   },
 };
 
@@ -45,12 +48,12 @@ const FocusFlowDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: Colors.dark.primary,
-    background: Colors.dark.background,
-    card: Colors.dark.background,
-    text: Colors.dark.foreground,
-    border: Colors.dark.border,
-    notification: Colors.dark.primary,
+    primary: darkColors.primary,
+    background: darkColors.background,
+    card: darkColors.background,
+    text: darkColors.foreground,
+    border: darkColors.border,
+    notification: darkColors.primary,
   },
 };
 

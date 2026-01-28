@@ -20,79 +20,87 @@ Focus Flow is a task-based focus timer designed to help people start on time, st
 
 ### FR-1: Task Commitment
 
-| ID     | Requirement                                                     |
-| ------ | --------------------------------------------------------------- |
-| FR-1.1 | User must enter a task name before starting a focus session     |
-| FR-1.2 | Task name is required, max 100 characters                       |
-| FR-1.3 | User can optionally add success criteria to define "done"       |
-| FR-1.4 | User can start session immediately or schedule a start time     |
-| FR-1.5 | Scheduled sessions trigger a notification at the scheduled time |
+| ID     | Requirement                                                                                              |
+| ------ | -------------------------------------------------------------------------------------------------------- |
+| FR-1.1 | Screen displays heading "What are you working on?"                                                       |
+| FR-1.2 | User must enter a task name before starting (placeholder: "Enter your task")                             |
+| FR-1.3 | Task name is required, max 100 characters                                                                |
+| FR-1.4 | User can optionally add success criteria (placeholder: "What does success look like? (optional)")        |
+| FR-1.5 | Helper text displayed: "One task. One session."                                                          |
+| FR-1.6 | User can start session immediately ("Start now" button) or schedule a start time ("Schedule start" link) |
+| FR-1.7 | Scheduled sessions trigger a notification at the scheduled time                                          |
 
 ### FR-2: Mode Selection
 
-| ID     | Requirement                                                       |
-| ------ | ----------------------------------------------------------------- |
-| FR-2.1 | User chooses between Flexible and Strict mode before each session |
-| FR-2.2 | Flexible mode allows ending the session early                     |
-| FR-2.3 | Strict mode prevents ending the session before timer completes    |
-| FR-2.4 | Default mode is configurable in settings                          |
-| FR-2.5 | Strict mode is marked as "Recommended" in selection UI            |
+| ID     | Requirement                                                           |
+| ------ | --------------------------------------------------------------------- |
+| FR-2.1 | Modal displays with title "Choose your mode"                          |
+| FR-2.2 | User chooses between Flexible and Strict mode before each session     |
+| FR-2.3 | Flexible mode: "You can end the session early if needed."             |
+| FR-2.4 | Strict mode: "Session runs until completion. Helps build discipline." |
+| FR-2.5 | Strict mode is marked with "Recommended" badge                        |
+| FR-2.6 | Default mode is configurable in settings                              |
+| FR-2.7 | Confirm button: "Begin session"                                       |
 
 ### FR-3: Focus Session
 
-| ID     | Requirement                                                      |
-| ------ | ---------------------------------------------------------------- |
-| FR-3.1 | Timer counts down from configured duration (default: 25 minutes) |
-| FR-3.2 | Display shows current task name throughout session               |
-| FR-3.3 | Circular progress ring shows visual progress                     |
-| FR-3.4 | Timer continues when app is backgrounded                         |
-| FR-3.5 | Session auto-advances to break when timer completes              |
-| FR-3.6 | In Flexible mode, "End session" option is available              |
-| FR-3.7 | In Strict mode, no early exit option is shown                    |
+| ID     | Requirement                                            |
+| ------ | ------------------------------------------------------ |
+| FR-3.1 | Timer counts down from 25 minutes                      |
+| FR-3.2 | Label "FOCUSING ON" displayed above task name          |
+| FR-3.3 | Display shows current task name throughout session     |
+| FR-3.4 | Circular progress ring shows visual progress           |
+| FR-3.5 | Timer continues when app is backgrounded               |
+| FR-3.6 | Session auto-advances to break when timer completes    |
+| FR-3.7 | In Flexible mode, "End session" text link is available |
+| FR-3.8 | In Strict mode, no early exit option is shown          |
+| FR-3.9 | Bottom navigation is hidden during focus session       |
 
 ### FR-4: Break
 
-| ID     | Requirement                                                 |
-| ------ | ----------------------------------------------------------- |
-| FR-4.1 | Short break follows each focus session (default: 5 minutes) |
-| FR-4.2 | Long break after configured number of sessions (default: 4) |
-| FR-4.3 | Long break duration configurable (default: 15 minutes)      |
-| FR-4.4 | User can skip break and proceed to reflection               |
-| FR-4.5 | Break screen has distinct visual treatment from focus       |
+| ID     | Requirement                                        |
+| ------ | -------------------------------------------------- |
+| FR-4.1 | Short break follows each focus session (5 minutes) |
+| FR-4.2 | Long break after 4 sessions (15 minutes)           |
+| FR-4.3 | Header displays "BREAK" in uppercase               |
+| FR-4.4 | Timer displayed without progress ring              |
+| FR-4.5 | Message displayed: "Step away. Rest your mind."    |
+| FR-4.6 | Break screen uses muted background color           |
+| FR-4.7 | User can skip break and proceed to reflection      |
+| FR-4.8 | Bottom navigation is hidden during break           |
 
 ### FR-5: Reflection/Accountability
 
-| ID     | Requirement                                                                                |
-| ------ | ------------------------------------------------------------------------------------------ |
-| FR-5.1 | After each session, user selects outcome: Completed, Partially completed, or Not completed |
-| FR-5.2 | For partial/not completed, user selects a reason                                           |
-| FR-5.3 | Available reasons: Distracted, Task too big, Low energy, Interrupted                       |
-| FR-5.4 | User can continue with same task, start new task, or end                                   |
-| FR-5.5 | Session data is saved to history with outcome and reason                                   |
+| ID     | Requirement                                                                           |
+| ------ | ------------------------------------------------------------------------------------- |
+| FR-5.1 | Header displays "Session complete" with task name below                               |
+| FR-5.2 | Question displayed: "Did you achieve what you set out to do?"                         |
+| FR-5.3 | User selects outcome: "Completed", "Partially completed", or "Not completed"          |
+| FR-5.4 | For partial/not completed, prompt "What got in the way? (optional)" with reason chips |
+| FR-5.5 | Available reasons: Distracted, Task too big, Low energy, Interrupted                  |
+| FR-5.6 | Actions: "Continue" (primary button), "New task" (text link), "End" (text link)       |
+| FR-5.7 | Session data is saved to history with outcome and optional reasons                    |
 
 ### FR-6: History
 
-| ID     | Requirement                                                              |
-| ------ | ------------------------------------------------------------------------ |
-| FR-6.1 | Display today's session summary (X of Y completed)                       |
-| FR-6.2 | Filter sessions by Today or Last 7 days                                  |
-| FR-6.3 | Each session shows: task name, time, duration, outcome                   |
-| FR-6.4 | Outcome indicated by icon: ✓ (completed), ⚠ (partial), ✕ (not completed) |
-| FR-6.5 | Empty state shown when no sessions exist                                 |
+| ID     | Requirement                                                                                             |
+| ------ | ------------------------------------------------------------------------------------------------------- |
+| FR-6.1 | Screen title: "History"                                                                                 |
+| FR-6.2 | Summary card displays "Today", "X / Y", "sessions completed"                                            |
+| FR-6.3 | Filter chips: "Today" and "7 days"                                                                      |
+| FR-6.4 | Each session shows: task name (medium weight), time                                                     |
+| FR-6.5 | Outcome icon in circular muted background: ✓ (completed, primary color), ⚠ (partial), ✕ (not completed) |
+| FR-6.6 | Empty state shown when no sessions exist                                                                |
 
 ### FR-7: Settings
 
-| ID     | Requirement                                               |
-| ------ | --------------------------------------------------------- |
-| FR-7.1 | Configure focus duration (15, 20, 25, 30, 45, 60 minutes) |
-| FR-7.2 | Configure short break duration (5, 10, 15 minutes)        |
-| FR-7.3 | Configure long break duration (15, 20, 30 minutes)        |
-| FR-7.4 | Toggle: Default to strict mode                            |
-| FR-7.5 | Toggle: Sound enabled                                     |
-| FR-7.6 | Toggle: Vibration enabled                                 |
-| FR-7.7 | Select: Dark mode (System, Light, Dark)                   |
-| FR-7.8 | Option to clear all session history                       |
-| FR-7.9 | Display app version                                       |
+| ID     | Requirement                                                                           |
+| ------ | ------------------------------------------------------------------------------------- |
+| FR-7.1 | Toggle: Default to strict mode (with description "Prevent early session exit")        |
+| FR-7.2 | Toggle: Sound & vibration (combined, with description "Session start and end alerts") |
+| FR-7.3 | Toggle: Dark mode (with description "Easier on the eyes")                             |
+| FR-7.4 | Display about text: "No account required. All data stays on your device."             |
+| FR-7.5 | Display app version                                                                   |
 
 ### FR-8: Feedback
 
@@ -208,6 +216,10 @@ The following features are explicitly not included in the initial release:
 - Multiple timer presets
 - Custom sounds
 - Focus music / ambient sounds
+- Configurable timer durations (uses defaults: 25min focus, 5min break, 15min long break)
+- Separate sound/vibration toggles (combined into single toggle)
+- System theme detection (manual dark mode toggle only)
+- Clear all data option
 
 ---
 

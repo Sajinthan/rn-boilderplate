@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { useSettingsStore } from './settings-store';
+import { TimerDefaults } from '@/constants/theme';
 
 // ============================================
 // TYPES
@@ -71,15 +71,13 @@ const formatTime = (seconds: number): string => {
 };
 
 const getDurationForSessionType = (sessionType: SessionType): number => {
-  const { durations } = useSettingsStore.getState();
-
   switch (sessionType) {
     case 'focus':
-      return durations.focusDuration * 60;
+      return TimerDefaults.focusDuration * 60;
     case 'shortBreak':
-      return durations.shortBreakDuration * 60;
+      return TimerDefaults.shortBreakDuration * 60;
     case 'longBreak':
-      return durations.longBreakDuration * 60;
+      return TimerDefaults.longBreakDuration * 60;
   }
 };
 
@@ -201,9 +199,8 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
 
   startBreak: () => {
     const { completedSessions } = get();
-    const { durations } = useSettingsStore.getState();
 
-    const isLongBreak = completedSessions % durations.sessionsBeforeLongBreak === 0;
+    const isLongBreak = completedSessions % TimerDefaults.sessionsBeforeLongBreak === 0;
     const breakType: SessionType = isLongBreak ? 'longBreak' : 'shortBreak';
 
     set(() => ({
