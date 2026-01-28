@@ -1,10 +1,13 @@
+import { useRouter } from 'expo-router';
 import { Clock } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
+import ModeSelectionModal from '@/components/ModeSelectionModal';
 import { useColors } from '@/hooks/use-colors';
+import { useTimerStore } from '@/stores/timer-store';
 
 /**
  * Focus Tab - Task Commitment Screen
@@ -13,13 +16,22 @@ import { useColors } from '@/hooks/use-colors';
 export default function FocusScreen() {
   const [task, setTask] = useState('');
   const [successCriteria, setSuccessCriteria] = useState('');
+  const [showModeModal, setShowModeModal] = useState(false);
   const colors = useColors();
+  const router = useRouter();
+  const { commitToTask, startSession } = useTimerStore();
 
   const handleStartNow = () => {
     if (task.trim()) {
-      // TODO: Start focus session with task and optional success criteria
-      console.log('Starting session:', task, successCriteria);
+      setShowModeModal(true);
     }
+  };
+
+  const handleModeConfirm = (isStrictMode: boolean) => {
+    setShowModeModal(false);
+    commitToTask({ name: task.trim(), successCriteria: successCriteria.trim() || undefined }, isStrictMode);
+    startSession();
+    router.push('/(tabs)/focus/session');
   };
 
   const handleScheduleStart = () => {
@@ -29,6 +41,11 @@ export default function FocusScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background" edges={['top']}>
+      <ModeSelectionModal
+        isVisible={showModeModal}
+        onClose={() => setShowModeModal(false)}
+        onConfirm={handleModeConfirm}
+      />
       <View className="flex-1 justify-center px-6">
         <View className="w-full max-w-sm self-center">
           {/* Main heading */}
