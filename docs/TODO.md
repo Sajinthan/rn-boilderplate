@@ -86,7 +86,7 @@ Active timer with progress visualization.
   - Props: progress (0-1), size, strokeWidth, children (for centered timer text)
   - File: `src/components/ProgressRing/index.tsx`
 
-- [ ] **Task 9: Build Focus Session screen with timer**
+- [x] **Task 9: Build Focus Session screen with timer**
   - Label: "FOCUSING ON" (uppercase, muted)
   - Task name display (heading style)
   - Large circular timer with progress ring
@@ -176,11 +176,11 @@ Enhancements for production readiness.
 | Phase 1: Foundation         | 2      | 2         |
 | Phase 2: Settings Feature   | 2      | 2         |
 | Phase 3: Task Commitment    | 3      | 3         |
-| Phase 4: Focus Session      | 2      | 1         |
+| Phase 4: Focus Session      | 2      | 2         |
 | Phase 5: Session Completion | 3      | 1         |
 | Phase 6: History Feature    | 1      | 0         |
 | Phase 7: Polish             | 3      | 0         |
-| **Total**                   | **16** | **9**     |
+| **Total**                   | **16** | **10**    |
 
 ---
 

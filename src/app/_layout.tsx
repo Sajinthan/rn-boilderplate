@@ -13,8 +13,8 @@ import { View } from 'react-native';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
 import { cn } from '@/lib/utils';
+
 import '../global.css';
 
 // Prevent splash screen from auto-hiding
