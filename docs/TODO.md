@@ -34,13 +34,14 @@ Complete settings functionality.
   - Persist to AsyncStorage
   - File: `src/stores/settings-store.ts`
 
-- [ ] **Task 4: Build Settings screen**
+- [x] **Task 4: Build Settings screen**
   - Toggle: Default to strict mode (with "Prevent early session exit" description)
   - Toggle: Sound & vibration (combined, with "Session start and end alerts" description)
   - Toggle: Dark mode (with "Easier on the eyes" description)
   - About card: "No account required. All data stays on your device."
   - Version display
-  - File: `src/app/(tabs)/settings/index.tsx`
+  - SettingsItem extracted to reusable component
+  - Files: `src/app/(tabs)/settings/index.tsx`, `src/components/SettingsItem/index.tsx`
 
 ---
 
@@ -174,13 +175,13 @@ Enhancements for production readiness.
 | Phase                       | Tasks  | Completed |
 | --------------------------- | ------ | --------- |
 | Phase 1: Foundation         | 2      | 2         |
-| Phase 2: Settings Feature   | 2      | 1         |
+| Phase 2: Settings Feature   | 2      | 2         |
 | Phase 3: Task Commitment    | 3      | 2         |
 | Phase 4: Focus Session      | 2      | 0         |
 | Phase 5: Session Completion | 3      | 1         |
 | Phase 6: History Feature    | 1      | 0         |
 | Phase 7: Polish             | 3      | 0         |
-| **Total**                   | **16** | **6**     |
+| **Total**                   | **16** | **7**     |
 
 ---
 

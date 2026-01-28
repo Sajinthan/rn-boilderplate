@@ -1,41 +1,10 @@
 import Constants from 'expo-constants';
 import React from 'react';
-import { ScrollView, Switch, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useColors } from '@/hooks/use-colors';
+import SettingsItem from '@/components/SettingsItem';
 import { useSettingsStore } from '@/stores/settings-store';
-
-/**
- * Settings Item Component
- * Displays a setting with label, description, and toggle switch
- */
-interface SettingsItemProps {
-  label: string;
-  description: string;
-  value: boolean;
-  onValueChange: (value: boolean) => void;
-}
-
-function SettingsItem({ label, description, value, onValueChange }: SettingsItemProps) {
-  const colors = useColors();
-
-  return (
-    <View className="flex-row items-center justify-between border-b border-border py-5">
-      <View className="flex-1 pr-4">
-        <Text className="text-body font-medium text-foreground">{label}</Text>
-        <Text className="mt-0.5 text-helper text-muted-foreground">{description}</Text>
-      </View>
-      <Switch
-        value={value}
-        onValueChange={onValueChange}
-        trackColor={{ false: colors.muted, true: colors.primary }}
-        thumbColor={colors.background}
-        ios_backgroundColor={colors.muted}
-      />
-    </View>
-  );
-}
 
 /**
  * Settings Tab - App Settings Screen
