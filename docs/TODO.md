@@ -2,13 +2,13 @@
 
 ## Overview
 
-This document tracks all implementation tasks for the Focus Flow app. Tasks are organized by phase with dependencies noted.
+This document tracks all implementation tasks for the Focus Flow app. Tasks are organized to build complete features incrementally - each phase delivers working functionality.
 
 ---
 
 ## Phase 1: Foundation
 
-These tasks have no dependencies and should be completed first.
+Essential setup before building features.
 
 - [x] **Task 1: Update theme to match UX design system**
   - Update colors (primary green, light/dark mode palettes)
@@ -16,47 +16,53 @@ These tasks have no dependencies and should be completed first.
   - Set spacing and border radius values
   - Files: `src/constants/theme.ts`, `tailwind.config.js`, `src/global.css`, `src/app/_layout.tsx`
 
+- [x] **Task 2: Setup 3-tab bottom navigation structure**
+  - Create tab layout with Focus, History, Settings tabs
+  - Tab bar height: 80px with safe area
+  - Icons from lucide-react-native
+  - File: `src/app/(tabs)/_layout.tsx`
+
+---
+
+## Phase 2: Settings Feature
+
+Complete settings functionality.
+
 - [x] **Task 3: Create Zustand store for app settings**
   - State: defaultStrictMode, soundAndVibrationEnabled, darkModeEnabled
   - Actions: updateSetting, resetToDefaults
   - Persist to AsyncStorage
   - File: `src/stores/settings-store.ts`
 
-- [x] **Task 4: Create Zustand store for timer state**
+- [ ] **Task 4: Build Settings screen**
+  - Toggle: Default to strict mode (with "Prevent early session exit" description)
+  - Toggle: Sound & vibration (combined, with "Session start and end alerts" description)
+  - Toggle: Dark mode (with "Easier on the eyes" description)
+  - About card: "No account required. All data stays on your device."
+  - Version display
+  - File: `src/app/(tabs)/settings/index.tsx`
+
+---
+
+## Phase 3: Task Commitment Flow
+
+Start a focus session with task commitment.
+
+- [x] **Task 5: Create Zustand store for timer state**
   - State: status, currentTask, isStrictMode, timeRemaining, sessionType
   - Actions: commitToTask, startSession, pauseSession, tick, endSession, startBreak
   - Computed: progress, formattedTime
   - File: `src/stores/timer-store.ts`
 
-- [x] **Task 5: Create Zustand store for session history**
-  - Types: Session, SessionOutcome, IncompleteReason
-  - State: sessions array
-  - Actions: addSession, getSessionsForDate, getTodayStats, getWeekStats
-  - Persist to AsyncStorage
-  - File: `src/stores/session-store.ts`
+- [x] **Task 6: Build Task Commitment screen**
+  - Heading: "What are you working on?"
+  - Task name input (required, placeholder: "Enter your task")
+  - Success criteria input (optional, placeholder: "What does success look like? (optional)")
+  - Helper text: "One task. One session."
+  - "Start now" button and "Schedule start" link
+  - File: `src/app/(tabs)/focus/index.tsx`
 
----
-
-## Phase 2: Core Structure
-
-Complete after Phase 1 foundation is in place.
-
-- [x] **Task 2: Setup 3-tab bottom navigation structure** _(blocked by: #1)_
-  - Create tab layout with Focus, History, Settings tabs
-  - Tab bar height: 80px with safe area
-  - Icons from lucide-react-native
-  - File: `src/app/(tabs)/_layout.tsx`
-
-- [ ] **Task 9: Build circular progress ring component** _(blocked by: #1)_
-  - SVG-based circular progress indicator
-  - Size: 280px, stroke width: 4px
-  - Background stroke: muted color, progress stroke: primary color
-  - Rotation: -90deg (starts from top), stroke-linecap: round
-  - Props: progress (0-1), size, strokeWidth, children (for centered timer text)
-  - Animated with react-native-reanimated (0.5s ease on stroke-dashoffset)
-  - File: `src/components/ProgressRing.tsx`
-
-- [ ] **Task 7: Build Mode Selection modal** _(blocked by: #1, #3)_
+- [ ] **Task 7: Build Mode Selection modal**
   - Title: "Choose your mode"
   - Flexible mode: "You can end the session early if needed."
   - Strict mode: "Session runs until completion. Helps build discipline." + "Recommended" badge
@@ -67,19 +73,20 @@ Complete after Phase 1 foundation is in place.
 
 ---
 
-## Phase 3: Main Screens
+## Phase 4: Focus Session
 
-Core app screens - complete after Phase 2.
+Active timer with progress visualization.
 
-- [ ] **Task 6: Build Task Commitment screen** _(blocked by: #1, #2, #4)_
-  - Heading: "What are you working on?"
-  - Task name input (required, placeholder: "Enter your task")
-  - Success criteria input (optional, placeholder: "What does success look like? (optional)")
-  - Helper text: "One task. One session."
-  - "Start now" button and "Schedule start" link
-  - File: `src/app/(tabs)/focus/index.tsx`
+- [ ] **Task 8: Build circular progress ring component**
+  - SVG-based circular progress indicator
+  - Size: 280px, stroke width: 4px
+  - Background stroke: muted color, progress stroke: primary color
+  - Rotation: -90deg (starts from top), stroke-linecap: round
+  - Props: progress (0-1), size, strokeWidth, children (for centered timer text)
+  - Animated with react-native-reanimated (0.5s ease on stroke-dashoffset)
+  - File: `src/components/ProgressRing.tsx`
 
-- [ ] **Task 8: Build Focus Session screen with timer** _(blocked by: #4, #9)_
+- [ ] **Task 9: Build Focus Session screen with timer**
   - Label: "FOCUSING ON" (uppercase, muted)
   - Task name display (heading style)
   - Large circular timer with progress ring
@@ -88,23 +95,29 @@ Core app screens - complete after Phase 2.
   - Hide bottom navigation
   - File: `src/app/(tabs)/focus/session.tsx`
 
-- [ ] **Task 12: Build History screen with session list** _(blocked by: #2, #5)_
-  - Title: "History"
-  - Summary card: "Today" / "X / Y" / "sessions completed"
-  - Filter chips: "Today", "7 days"
-  - Session list with task name, time, outcome icon in circular background
-  - Empty state handling
-  - File: `src/app/(tabs)/history/index.tsx`
+---
 
-- [ ] **Task 13: Build Settings screen** _(blocked by: #2, #3)_
-  - Toggle: Default to strict mode (with "Prevent early session exit" description)
-  - Toggle: Sound & vibration (combined, with "Session start and end alerts" description)
-  - Toggle: Dark mode (with "Easier on the eyes" description)
-  - About card: "No account required. All data stays on your device."
-  - Version display
-  - File: `src/app/(tabs)/settings/index.tsx`
+## Phase 5: Session Completion
 
-- [ ] **Task 11: Build Reflection/Accountability screen** _(blocked by: #4, #5)_
+Break and reflection after focus session.
+
+- [ ] **Task 10: Build Break screen**
+  - Header: "BREAK" (uppercase)
+  - Timer display without progress ring
+  - Message: "Step away. Rest your mind."
+  - Muted background color
+  - Skip break option
+  - Hide bottom navigation
+  - File: `src/app/(tabs)/focus/break.tsx`
+
+- [x] **Task 11: Create Zustand store for session history**
+  - Types: Session, SessionOutcome, IncompleteReason
+  - State: sessions array
+  - Actions: addSession, getSessionsForDate, getTodayStats, getWeekStats
+  - Persist to AsyncStorage
+  - File: `src/stores/session-store.ts`
+
+- [ ] **Task 12: Build Reflection/Accountability screen**
   - Header: "Session complete" with task name
   - Question: "Did you achieve what you set out to do?"
   - Outcome buttons: "Completed", "Partially completed", "Not completed"
@@ -116,39 +129,38 @@ Core app screens - complete after Phase 2.
 
 ---
 
-## Phase 4: Session Flow
+## Phase 6: History Feature
 
-Complete the full session experience.
+View past sessions.
 
-- [ ] **Task 10: Build Break screen** _(blocked by: #4, #8)_
-  - Header: "BREAK" (uppercase)
-  - Timer display without progress ring
-  - Message: "Step away. Rest your mind."
-  - Muted background color
-  - Skip break option
-  - Hide bottom navigation
-  - File: `src/app/(tabs)/focus/break.tsx`
+- [ ] **Task 13: Build History screen with session list**
+  - Title: "History"
+  - Summary card: "Today" / "X / Y" / "sessions completed"
+  - Filter chips: "Today", "7 days"
+  - Session list with task name, time, outcome icon in circular background
+  - Empty state handling
+  - File: `src/app/(tabs)/history/index.tsx`
 
-- [ ] **Task 16: Build schedule start time picker** _(blocked by: #4, #6)_
+---
+
+## Phase 7: Polish
+
+Enhancements for production readiness.
+
+- [ ] **Task 14: Build schedule start time picker**
   - Bottom sheet with time picker
   - Hour, minute, AM/PM selectors
   - Schedule confirmation
   - File: `src/components/ScheduleTimePicker.tsx`
 
----
-
-## Phase 5: Polish
-
-Final enhancements for production readiness.
-
-- [ ] **Task 14: Implement timer background handling** _(blocked by: #4, #8)_
+- [ ] **Task 15: Implement timer background handling**
   - Store absolute end time
   - Recalculate on foreground return
   - Local notifications when timer completes
   - AppState listener integration
   - Files: `src/stores/timer-store.ts`, `src/services/notifications.ts`
 
-- [ ] **Task 15: Add sound and vibration feedback** _(blocked by: #3, #8)_
+- [ ] **Task 16: Add sound and vibration feedback**
   - Session start/end sounds
   - Break start/end sounds
   - Haptic feedback
@@ -159,14 +171,16 @@ Final enhancements for production readiness.
 
 ## Progress Summary
 
-| Phase                   | Tasks  | Completed |
-| ----------------------- | ------ | --------- |
-| Phase 1: Foundation     | 4      | 4         |
-| Phase 2: Core Structure | 3      | 1         |
-| Phase 3: Main Screens   | 5      | 0         |
-| Phase 4: Session Flow   | 2      | 0         |
-| Phase 5: Polish         | 2      | 0         |
-| **Total**               | **16** | **5**     |
+| Phase                       | Tasks  | Completed |
+| --------------------------- | ------ | --------- |
+| Phase 1: Foundation         | 2      | 2         |
+| Phase 2: Settings Feature   | 2      | 1         |
+| Phase 3: Task Commitment    | 3      | 2         |
+| Phase 4: Focus Session      | 2      | 0         |
+| Phase 5: Session Completion | 3      | 1         |
+| Phase 6: History Feature    | 1      | 0         |
+| Phase 7: Polish             | 3      | 0         |
+| **Total**                   | **16** | **6**     |
 
 ---
 
