@@ -1,10 +1,11 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
 
 import ProgressRing from '@/components/ProgressRing';
+import { TimerDefaults } from '@/constants/theme';
 import { useTimerStore } from '@/stores/timer-store';
 
 /**
@@ -19,10 +20,31 @@ export default function SessionScreen() {
   const status = useTimerStore(state => state.status);
   const currentTask = useTimerStore(state => state.currentTask);
   const isStrictMode = useTimerStore(state => state.isStrictMode);
-  const progress = useTimerStore(state => state.progress);
-  const formattedTime = useTimerStore(state => state.formattedTime);
+  const timeRemaining = useTimerStore(state => state.timeRemaining);
+  const sessionType = useTimerStore(state => state.sessionType);
   const tick = useTimerStore(state => state.tick);
   const endSession = useTimerStore(state => state.endSession);
+  const startSession = useTimerStore(state => state.startSession);
+
+  // Compute progress and formatted time locally (Zustand getters don't work properly)
+  const totalDuration = useMemo(() => {
+    switch (sessionType) {
+      case 'focus':
+        return TimerDefaults.focusDuration * 60;
+      case 'shortBreak':
+        return TimerDefaults.shortBreakDuration * 60;
+      case 'longBreak':
+        return TimerDefaults.longBreakDuration * 60;
+    }
+  }, [sessionType]);
+
+  const progress = 1 - timeRemaining / totalDuration;
+
+  const formattedTime = useMemo(() => {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }, [timeRemaining]);
 
   // Hide tab bar when this screen is focused
   useFocusEffect(
@@ -39,6 +61,13 @@ export default function SessionScreen() {
       };
     }, [navigation]),
   );
+
+  // Ensure session is started when screen mounts
+  useEffect(() => {
+    if (status === 'committed') {
+      startSession();
+    }
+  }, [status, startSession]);
 
   // Start timer interval when session is running
   useEffect(() => {

@@ -68,7 +68,7 @@ export const Layout = {
   /** Progress ring size - for SVG calculations */
   progressRingSize: 280,
   /** Progress ring stroke width - for SVG calculations */
-  progressRingStroke: 4,
+  progressRingStroke: 8,
 } as const;
 
 // ============================================
