@@ -33,28 +33,30 @@
     --radius: 0.75rem;
   }
 
-  .dark {
-    /* Dark Mode */
-    --background: 0 0% 4%;
-    --foreground: 0 0% 96%;
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Dark Mode */
+      --background: 0 0% 4%;
+      --foreground: 0 0% 96%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
+      --muted: 0 0% 12%;
+      --muted-foreground: 0 0% 55%;
 
-    --primary: 142 71% 45%;
-    --primary-foreground: 0 0% 100%;
+      --primary: 142 71% 45%;
+      --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 96%;
+      --secondary: 0 0% 12%;
+      --secondary-foreground: 0 0% 96%;
 
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
-    --ring: 142 71% 45%;
+      --border: 0 0% 16%;
+      --input: 0 0% 16%;
+      --ring: 142 71% 45%;
 
-    /* Semantic Colors */
-    --success: 142 71% 45%;
-    --warning: 38 92% 50%;
-    --destructive: 0 0% 55%;
-    --destructive-foreground: 0 0% 100%;
+      /* Semantic Colors */
+      --success: 142 71% 45%;
+      --warning: 38 92% 50%;
+      --destructive: 0 0% 55%;
+      --destructive-foreground: 0 0% 100%;
+    }
   }
 }

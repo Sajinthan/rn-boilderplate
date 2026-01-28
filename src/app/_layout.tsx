@@ -5,7 +5,6 @@ import {
   Inter_700Bold,
   useFonts,
 } from '@expo-google-fonts/inter';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -13,10 +12,9 @@ import { useEffect } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 
-import KeyboardAwareWrapper from '@/components/KeyboardAwareWrapper';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { getColors } from '@/hooks/use-colors';
 
+import { cn } from '@/lib/utils';
 import '../global.css';
 
 // Prevent splash screen from auto-hiding
@@ -24,38 +22,6 @@ SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   anchor: '(tabs)',
-};
-
-/**
- * Custom navigation theme matching the Focus Flow design system
- */
-const lightColors = getColors('light');
-const darkColors = getColors('dark');
-
-const FocusFlowLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: lightColors.primary,
-    background: lightColors.background,
-    card: lightColors.background,
-    text: lightColors.foreground,
-    border: lightColors.border,
-    notification: lightColors.primary,
-  },
-};
-
-const FocusFlowDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    primary: darkColors.primary,
-    background: darkColors.background,
-    card: darkColors.background,
-    text: darkColors.foreground,
-    border: darkColors.border,
-    notification: darkColors.primary,
-  },
 };
 
 export default function RootLayout() {
@@ -81,16 +47,17 @@ export default function RootLayout() {
   }
 
   return (
-    <KeyboardAwareWrapper>
-      <View className={`flex-1 ${isDark ? 'dark' : ''}`}>
-        <ThemeProvider value={isDark ? FocusFlowDarkTheme : FocusFlowLightTheme}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style={isDark ? 'light' : 'dark'} />
-        </ThemeProvider>
-      </View>
-    </KeyboardAwareWrapper>
+    <View className={cn('flex-1', isDark ? 'dark' : 'light')}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: isDark ? 'hsl(0, 0%, 4%)' : 'hsl(0, 0%, 100%)' },
+        }}
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+    </View>
   );
 }

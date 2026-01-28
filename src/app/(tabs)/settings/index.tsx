@@ -11,7 +11,7 @@ import { useSettingsStore } from '@/stores/settings-store';
  * Allows users to customize their focus experience
  */
 export default function SettingsScreen() {
-  const { defaultStrictMode, soundAndVibrationEnabled, darkModeEnabled, updateSetting } = useSettingsStore();
+  const { defaultStrictMode, soundAndVibrationEnabled, updateSetting } = useSettingsStore();
 
   // Get app version from expo-constants
   const appVersion = Constants.expoConfig?.version ?? '1.0.0';
@@ -38,13 +38,6 @@ export default function SettingsScreen() {
             description="Session start and end alerts"
             value={soundAndVibrationEnabled}
             onValueChange={value => updateSetting('soundAndVibrationEnabled', value)}
-          />
-
-          <SettingsItem
-            label="Dark mode"
-            description="Easier on the eyes"
-            value={darkModeEnabled}
-            onValueChange={value => updateSetting('darkModeEnabled', value)}
           />
         </View>
 

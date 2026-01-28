@@ -1,10 +1,10 @@
-import { useSettingsStore } from '@/stores/settings-store';
+import { useColorScheme as useSystemColorScheme } from 'react-native';
 
 /**
- * Custom color scheme hook that uses the manual dark mode toggle from settings.
- * Per REQUIREMENTS.md: "System theme detection (manual dark mode toggle only)"
+ * Color scheme hook that follows system theme.
+ * Returns the device's current color scheme preference.
  */
 export function useColorScheme(): 'light' | 'dark' {
-  const darkModeEnabled = useSettingsStore(state => state.darkModeEnabled);
-  return darkModeEnabled ? 'dark' : 'light';
+  const systemColorScheme = useSystemColorScheme();
+  return systemColorScheme ?? 'light';
 }
