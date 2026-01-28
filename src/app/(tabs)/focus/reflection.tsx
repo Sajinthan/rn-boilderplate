@@ -79,7 +79,7 @@ export default function ReflectionScreen() {
         <Text className="text-heading text-foreground mb-8">Did you achieve what you set out to do?</Text>
 
         {/* Outcome buttons */}
-        <View className="space-y-3">
+        <View className="gap-3">
           {outcomeOptions.map(option => {
             const styles = getOutcomeButtonStyles(option.value);
             const { Icon } = option;
