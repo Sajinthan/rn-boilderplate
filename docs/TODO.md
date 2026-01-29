@@ -147,11 +147,11 @@ View past sessions.
 
 Enhancements for production readiness.
 
-- [ ] **Task 14: Build schedule start time picker**
+- [x] **Task 14: Build schedule start time picker**
   - Bottom sheet with time picker
   - Hour, minute, AM/PM selectors
   - Schedule confirmation
-  - File: `src/components/ScheduleTimePicker.tsx`
+  - File: `src/components/ScheduleTimePicker/index.tsx`
 
 - [ ] **Task 15: Implement timer background handling**
   - Store absolute end time
@@ -179,8 +179,8 @@ Enhancements for production readiness.
 | Phase 4: Focus Session      | 2      | 2         |
 | Phase 5: Session Completion | 3      | 3         |
 | Phase 6: History Feature    | 1      | 1         |
-| Phase 7: Polish             | 3      | 0         |
-| **Total**                   | **16** | **13**    |
+| Phase 7: Polish             | 3      | 1         |
+| **Total**                   | **16** | **14**    |
 
 ---
 

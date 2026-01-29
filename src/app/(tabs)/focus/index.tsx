@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
 import ModeSelectionModal from '@/components/ModeSelectionModal';
+import ScheduleTimePicker from '@/components/ScheduleTimePicker';
 import { useColors } from '@/hooks/use-colors';
 import { useTimerStore } from '@/stores/timer-store';
 
@@ -17,6 +18,7 @@ export default function FocusScreen() {
   const [task, setTask] = useState('');
   const [successCriteria, setSuccessCriteria] = useState('');
   const [showModeModal, setShowModeModal] = useState(false);
+  const [showSchedulePicker, setShowSchedulePicker] = useState(false);
   const colors = useColors();
   const router = useRouter();
   const { commitToTask, startSession } = useTimerStore();
@@ -35,8 +37,15 @@ export default function FocusScreen() {
   };
 
   const handleScheduleStart = () => {
-    // TODO: Open schedule picker
-    console.log('Schedule start');
+    if (task.trim()) {
+      setShowSchedulePicker(true);
+    }
+  };
+
+  const handleScheduleConfirm = (hour: number, minute: number) => {
+    setShowSchedulePicker(false);
+    // TODO: Schedule the session to start at the selected time
+    console.log(`Scheduled for ${hour}:${minute.toString().padStart(2, '0')}`);
   };
 
   return (
@@ -45,6 +54,11 @@ export default function FocusScreen() {
         isVisible={showModeModal}
         onClose={() => setShowModeModal(false)}
         onConfirm={handleModeConfirm}
+      />
+      <ScheduleTimePicker
+        isVisible={showSchedulePicker}
+        onClose={() => setShowSchedulePicker(false)}
+        onConfirm={handleScheduleConfirm}
       />
       <View className="flex-1 justify-center px-6">
         <View className="w-full max-w-sm self-center">
