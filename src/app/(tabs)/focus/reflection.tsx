@@ -200,25 +200,24 @@ export default function ReflectionScreen() {
         )}
 
         {/* Actions */}
-        <View className="pt-8 space-y-3">
+        <View className="pt-8">
           <Button title="Continue" onPress={handleContinue} disabled={!selectedOutcome} className="h-14" />
 
-          <View className="flex-row items-center justify-center gap-3">
-            <TouchableOpacity
+          <View className="flex-row gap-3 mt-3">
+            <Button
+              title="Start new task"
               onPress={handleNewTask}
               disabled={!selectedOutcome}
-              className={cn('py-3', !selectedOutcome && 'opacity-50')}
-            >
-              <Text className="text-helper text-muted-foreground">New task</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
+              variant="outline"
+              className="h-14 flex-1"
+            />
+            <Button
+              title="End session"
               onPress={handleEnd}
               disabled={!selectedOutcome}
-              className={cn('py-3', !selectedOutcome && 'opacity-50')}
-            >
-              <Text className="text-helper text-muted-foreground">End</Text>
-            </TouchableOpacity>
+              variant="outline"
+              className="h-14 flex-1"
+            />
           </View>
         </View>
       </ScrollView>
