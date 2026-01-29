@@ -168,7 +168,7 @@ Enhancements for production readiness.
   - Notifications always fire regardless of soundAndVibrationEnabled setting
   - Files: `src/services/notification-service.ts`, `src/stores/timer-store.ts`, `src/app/_layout.tsx`, `app.config.ts`
 
-- [ ] **Task 17: Add sound and vibration feedback**
+- [x] **Task 17: Add sound and vibration feedback**
   - Session start/end sounds
   - Break start/end sounds
   - Haptic feedback
@@ -187,8 +187,8 @@ Enhancements for production readiness.
 | Phase 4: Focus Session      | 2      | 2         |
 | Phase 5: Session Completion | 3      | 3         |
 | Phase 6: History Feature    | 1      | 1         |
-| Phase 7: Polish             | 4      | 3         |
-| **Total**                   | **17** | **16**    |
+| Phase 7: Polish             | 4      | 4         |
+| **Total**                   | **17** | **17**    |
 
 ---
 

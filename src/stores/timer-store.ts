@@ -1,6 +1,12 @@
 import { create } from 'zustand';
 
 import { TimerDefaults } from '@/constants/theme';
+import {
+  playBreakEndFeedback,
+  playBreakStartFeedback,
+  playSessionEndFeedback,
+  playSessionStartFeedback,
+} from '@/lib/feedback';
 import { cancelAllNotifications, scheduleTimerNotification } from '@/services/notification-service';
 
 // ============================================
@@ -156,6 +162,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     }));
 
     scheduleTimerNotification(newEndTime, currentTask?.name, false);
+    playSessionStartFeedback();
   },
 
   pauseSession: () => {
@@ -211,6 +218,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
           completedSessions: state.completedSessions + 1,
           endTime: null,
         }));
+        playSessionEndFeedback();
       } else {
         // Break ended
         set(() => ({
@@ -218,6 +226,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
           status: 'idle',
           endTime: null,
         }));
+        playBreakEndFeedback();
       }
     } else {
       set(() => ({
@@ -243,6 +252,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     }));
 
     scheduleTimerNotification(newEndTime, undefined, true);
+    playBreakStartFeedback();
   },
 
   skipBreak: () => {
@@ -284,6 +294,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
           completedSessions: state.completedSessions + 1,
           endTime: null,
         }));
+        playSessionEndFeedback();
       } else {
         // Break ended
         set(() => ({
@@ -291,6 +302,7 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
           status: 'idle',
           endTime: null,
         }));
+        playBreakEndFeedback();
       }
     } else {
       // Timer still running, update timeRemaining
