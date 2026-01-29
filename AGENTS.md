@@ -37,8 +37,8 @@ src/
 │   ├── theme.ts            # Colors, fonts, shadows
 │   └── common.ts           # Common constants
 ├── hooks/                  # Custom React hooks
-│   ├── use-color-scheme.ts # Color scheme detection
-│   └── use-theme-color.ts  # Theme color utilities
+│   ├── useColorScheme.ts # Color scheme detection
+│   └── useThemeColor.ts  # Theme color utilities
 ├── lib/                    # Utility functions
 │   └── utils.ts            # Helper functions (cn, etc.)
 └── global.css              # Tailwind CSS imports
@@ -67,11 +67,7 @@ interface Props {
 }
 
 const MyComponent: React.FC<Props> = ({ ...props }) => {
-  return (
-    <View className="flex-1">
-      {/* Component content */}
-    </View>
-  );
+  return <View className="flex-1">{/* Component content */}</View>;
 };
 
 export default MyComponent;
@@ -79,18 +75,18 @@ export default MyComponent;
 
 ### Available Reusable Components
 
-| Component | Description |
-|-----------|-------------|
-| `Button` | Versatile button with primary, secondary, danger, success, outline, text variants |
-| `Input` | Text input with label, icons, and form validation support |
-| `Tab` | Tabbed navigation with animated indicator |
-| `Picker` | Dropdown selection with modal |
-| `DatePicker` | Platform-specific date picker (iOS modal, Android native) |
-| `TimePicker` | Platform-specific time picker |
-| `Toast` | Error toast notifications |
-| `BackButton` | Navigation back button with platform-aware positioning |
-| `BottomSheetWrapper` | Gorhom bottom sheet wrapper with backdrop |
-| `KeyboardAwareWrapper` | Keyboard-aware view with dismiss on tap |
+| Component              | Description                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| `Button`               | Versatile button with primary, secondary, danger, success, outline, text variants |
+| `Input`                | Text input with label, icons, and form validation support                         |
+| `Tab`                  | Tabbed navigation with animated indicator                                         |
+| `Picker`               | Dropdown selection with modal                                                     |
+| `DatePicker`           | Platform-specific date picker (iOS modal, Android native)                         |
+| `TimePicker`           | Platform-specific time picker                                                     |
+| `Toast`                | Error toast notifications                                                         |
+| `BackButton`           | Navigation back button with platform-aware positioning                            |
+| `BottomSheetWrapper`   | Gorhom bottom sheet wrapper with backdrop                                         |
+| `KeyboardAwareWrapper` | Keyboard-aware view with dismiss on tap                                           |
 
 ## Styling Guidelines
 
@@ -122,9 +118,7 @@ NativeWind doesn't fully support RN shadows. Use the SHADOWS constant:
 ```tsx
 import { SHADOWS } from '@/constants/theme';
 
-<View style={SHADOWS.calm}>
-  {/* Content with shadow */}
-</View>
+<View style={SHADOWS.calm}>{/* Content with shadow */}</View>;
 ```
 
 ## Navigation
@@ -144,12 +138,7 @@ import { useRouter } from 'expo-router';
 const MyComponent = () => {
   const router = useRouter();
 
-  return (
-    <Button
-      title="Go to Profile"
-      onPress={() => router.push('/profile')}
-    />
-  );
+  return <Button title="Go to Profile" onPress={() => router.push('/profile')} />;
 };
 ```
 
@@ -171,12 +160,7 @@ const MyForm = () => {
         name="email"
         rules={{ required: 'Email is required' }}
         render={({ field, fieldState }) => (
-          <Input
-            label="Email"
-            value={field.value}
-            onChangeText={field.onChange}
-            error={fieldState.error}
-          />
+          <Input label="Email" value={field.value} onChangeText={field.onChange} error={fieldState.error} />
         )}
       />
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />

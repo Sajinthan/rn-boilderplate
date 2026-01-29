@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
 import { TimerDefaults } from '@/constants/theme';
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 import { cn } from '@/lib/utils';
 import { type IncompleteReason, type SessionOutcome, reasonLabels, useSessionStore } from '@/stores/session-store';
 import { useTimerStore } from '@/stores/timer-store';

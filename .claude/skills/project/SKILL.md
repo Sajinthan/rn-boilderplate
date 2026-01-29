@@ -69,9 +69,9 @@ src/
 │   └── feature.ts               # Feature schemas + defaults
 │
 ├── hooks/                        # Custom React hooks
-│   ├── use-color-scheme.ts
-│   ├── use-color-scheme.web.ts  # Web-specific
-│   ├── use-theme-color.ts
+│   ├── useColorScheme.ts
+│   ├── useColorScheme.web.ts  # Web-specific
+│   ├── useThemeColor.ts
 │   └── useFeatureHook.ts
 │
 ├── lib/                          # Utilities & services
@@ -111,7 +111,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { PortalProvider } from '@gorhom/bottom-sheet';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { AuthenticationGuard, Toast, TermsAcceptanceModal } from '@/components';
 
 import '../global.css';
@@ -120,7 +120,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [fontsLoaded] = useFonts({ /* fonts */ });
+  const [fontsLoaded] = useFonts({
+    /* fonts */
+  });
 
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync();
@@ -187,9 +189,15 @@ export const SHADOWS = {
     shadowRadius: 12,
     elevation: 3,
   },
-  calmLg: { /* larger */ },
-  calmXl: { /* even larger */ },
-  none: { /* no shadow */ },
+  calmLg: {
+    /* larger */
+  },
+  calmXl: {
+    /* even larger */
+  },
+  none: {
+    /* no shadow */
+  },
 } as const;
 
 export const ANIMATION_DURATION = {

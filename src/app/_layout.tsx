@@ -12,8 +12,9 @@ import { useEffect } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { cn } from '@/lib/utils';
+import { configureNotificationChannel, requestNotificationPermissions } from '@/services/notification-service';
 
 import '../global.css';
 
@@ -41,6 +42,15 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
+
+  // Initialize notifications on app startup
+  useEffect(() => {
+    const initNotifications = async () => {
+      await configureNotificationChannel();
+      await requestNotificationPermissions();
+    };
+    initNotifications();
+  }, []);
 
   if (!fontsLoaded && !fontError) {
     return null;

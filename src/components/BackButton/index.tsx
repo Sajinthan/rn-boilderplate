@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react-native';
 
 import { cn } from '@/lib/utils';
 import { SHADOWS } from '@/constants/theme';
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 import Button from '../Button';
 
 const BackButton: React.FC = () => {

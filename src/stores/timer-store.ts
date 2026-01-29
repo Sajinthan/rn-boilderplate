@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { TimerDefaults } from '@/constants/theme';
+import { cancelAllNotifications, scheduleTimerNotification } from '@/services/notification-service';
 
 // ============================================
 // TYPES
@@ -24,6 +25,7 @@ export interface TimerState {
   completedSessions: number; // tracks sessions for long break
   scheduledStartTime: Date | null;
   sessionStartTime: Date | null; // for background handling
+  endTime: number | null; // absolute end time in epoch milliseconds
 }
 
 export interface TimerActions {
@@ -45,6 +47,9 @@ export interface TimerActions {
 
   // Reflection
   goToReflection: () => void;
+
+  // Background handling
+  recalculateFromBackground: () => void;
 
   // Reset
   reset: () => void;
@@ -94,6 +99,7 @@ const getDefaultState = (): TimerState => ({
   completedSessions: 0,
   scheduledStartTime: null,
   sessionStartTime: null,
+  endTime: null,
 });
 
 // ============================================
@@ -138,12 +144,19 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
       scheduledStartTime: null,
     })),
 
-  startSession: () =>
+  startSession: () => {
+    const { timeRemaining, currentTask } = get();
+    const newEndTime = Date.now() + timeRemaining * 1000;
+
     set(() => ({
       status: 'running',
       sessionStartTime: new Date(),
       scheduledStartTime: null,
-    })),
+      endTime: newEndTime,
+    }));
+
+    scheduleTimerNotification(newEndTime, currentTask?.name, false);
+  },
 
   pauseSession: () => {
     const { isStrictMode } = get();
@@ -152,13 +165,22 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     set(() => ({
       status: 'paused',
     }));
+
+    cancelAllNotifications();
   },
 
-  resumeSession: () =>
+  resumeSession: () => {
+    const { timeRemaining, currentTask } = get();
+    const newEndTime = Date.now() + timeRemaining * 1000;
+
     set(() => ({
       status: 'running',
       sessionStartTime: new Date(),
-    })),
+      endTime: newEndTime,
+    }));
+
+    scheduleTimerNotification(newEndTime, currentTask?.name, false);
+  },
 
   endSession: () => {
     const { isStrictMode } = get();
@@ -166,7 +188,10 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
 
     set(() => ({
       status: 'reflection',
+      endTime: null,
     }));
+
+    cancelAllNotifications();
   },
 
   tick: () => {
@@ -175,19 +200,23 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
     if (status !== 'running' && status !== 'break') return;
 
     if (timeRemaining <= 1) {
-      // Timer completed
+      // Timer completed in foreground - cancel the scheduled notification
+      cancelAllNotifications();
+
       if (status === 'running') {
         // Focus session ended
         set(state => ({
           timeRemaining: 0,
           status: 'reflection',
           completedSessions: state.completedSessions + 1,
+          endTime: null,
         }));
       } else {
         // Break ended
         set(() => ({
           timeRemaining: 0,
           status: 'idle',
+          endTime: null,
         }));
       }
     } else {
@@ -202,28 +231,79 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
 
     const isLongBreak = completedSessions % TimerDefaults.sessionsBeforeLongBreak === 0;
     const breakType: SessionType = isLongBreak ? 'longBreak' : 'shortBreak';
+    const breakDuration = getDurationForSessionType(breakType);
+    const newEndTime = Date.now() + breakDuration * 1000;
 
     set(() => ({
       status: 'break',
       sessionType: breakType,
-      timeRemaining: getDurationForSessionType(breakType),
+      timeRemaining: breakDuration,
       sessionStartTime: new Date(),
+      endTime: newEndTime,
     }));
+
+    scheduleTimerNotification(newEndTime, undefined, true);
   },
 
-  skipBreak: () =>
+  skipBreak: () => {
     set(() => ({
       status: 'idle',
       sessionType: 'focus',
       timeRemaining: getDurationForSessionType('focus'),
-    })),
+      endTime: null,
+    }));
 
-  goToReflection: () =>
+    cancelAllNotifications();
+  },
+
+  goToReflection: () => {
     set(() => ({
       status: 'reflection',
-    })),
+      endTime: null,
+    }));
 
-  reset: () => set(() => getDefaultState()),
+    cancelAllNotifications();
+  },
+
+  recalculateFromBackground: () => {
+    const { status, endTime } = get();
+
+    if ((status !== 'running' && status !== 'break') || endTime === null) return;
+
+    const now = Date.now();
+    const remainingMs = endTime - now;
+
+    if (remainingMs <= 0) {
+      // Timer completed while in background - cancel the (already fired) notification
+      cancelAllNotifications();
+
+      if (status === 'running') {
+        set(state => ({
+          timeRemaining: 0,
+          status: 'reflection',
+          completedSessions: state.completedSessions + 1,
+          endTime: null,
+        }));
+      } else {
+        // Break ended
+        set(() => ({
+          timeRemaining: 0,
+          status: 'idle',
+          endTime: null,
+        }));
+      }
+    } else {
+      // Timer still running, update timeRemaining
+      set(() => ({
+        timeRemaining: Math.ceil(remainingMs / 1000),
+      }));
+    }
+  },
+
+  reset: () => {
+    set(() => getDefaultState());
+    cancelAllNotifications();
+  },
 
   continueWithSameTask: () => {
     const { currentTask, isStrictMode } = get();
@@ -235,10 +315,13 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
       timeRemaining: getDurationForSessionType('focus'),
       sessionType: 'focus',
       sessionStartTime: null,
+      endTime: null,
     }));
+
+    cancelAllNotifications();
   },
 
-  startNewTask: () =>
+  startNewTask: () => {
     set(() => ({
       status: 'idle',
       currentTask: null,
@@ -246,5 +329,9 @@ export const useTimerStore = create<TimerStore>((set, get) => ({
       timeRemaining: getDurationForSessionType('focus'),
       sessionType: 'focus',
       sessionStartTime: null,
-    })),
+      endTime: null,
+    }));
+
+    cancelAllNotifications();
+  },
 }));

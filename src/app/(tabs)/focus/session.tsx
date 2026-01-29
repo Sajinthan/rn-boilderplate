@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ProgressRing from '@/components/ProgressRing';
 import { TimerDefaults } from '@/constants/theme';
+import { useAppStateTimer } from '@/hooks/useAppStateTimer';
 import { useTimerStore } from '@/stores/timer-store';
 
 /**
@@ -16,6 +17,9 @@ import { useTimerStore } from '@/stores/timer-store';
 export default function SessionScreen() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const navigation = useNavigation();
+
+  // Recalculate timer when app returns from background
+  useAppStateTimer();
 
   const status = useTimerStore(state => state.status);
   const currentTask = useTimerStore(state => state.currentTask);

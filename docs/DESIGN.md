@@ -33,7 +33,7 @@ import { Layout } from '@/constants/theme';
 const radius = (Layout.progressRingSize - Layout.progressRingStroke) / 2;
 
 // For colors in non-className contexts (e.g., icons, SVG stroke)
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 const colors = useColors();
 <Circle stroke={colors.primary} />
 <Icon color={colors.mutedForeground} />

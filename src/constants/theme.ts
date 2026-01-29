@@ -3,7 +3,7 @@
  * Theme constants following the design spec
  *
  * COLORS: Defined in src/global.css as CSS variables (single source of truth)
- * Use the useColors() hook from @/hooks/use-colors for programmatic color access
+ * Use the useColors() hook from @/hooks/useColors for programmatic color access
  */
 
 import { Platform } from 'react-native';

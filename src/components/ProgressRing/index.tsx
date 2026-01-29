@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 import { Layout } from '@/constants/theme';
 
 export interface ProgressRingProps {

@@ -4,6 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { useAppStateTimer } from '@/hooks/useAppStateTimer';
 import { useTimerStore } from '@/stores/timer-store';
 
 /**
@@ -14,6 +15,9 @@ import { useTimerStore } from '@/stores/timer-store';
 export default function BreakScreen() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const navigation = useNavigation();
+
+  // Recalculate timer when app returns from background
+  useAppStateTimer();
 
   const status = useTimerStore(state => state.status);
   const formattedTime = useTimerStore(state => state.formattedTime);

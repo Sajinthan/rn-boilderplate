@@ -153,14 +153,22 @@ Enhancements for production readiness.
   - Schedule confirmation
   - File: `src/components/ScheduleTimePicker/index.tsx`
 
-- [ ] **Task 15: Implement timer background handling**
+- [x] **Task 15: Implement timer background handling**
   - Store absolute end time
   - Recalculate on foreground return
   - Local notifications when timer completes
   - AppState listener integration
-  - Files: `src/stores/timer-store.ts`, `src/services/notifications.ts`
+  - Files: `src/stores/timer-store.ts`, `src/hooks/useAppStateTimer.ts`
 
-- [ ] **Task 16: Add sound and vibration feedback**
+- [x] **Task 16: Integrate expo-notifications for background timer alerts**
+  - Install expo-notifications and add plugin to app.config.ts
+  - Create notification service with schedule/cancel/permissions/channel functions
+  - Integrate into timer store: schedule on startSession/startBreak, cancel on pause/end/skip/reset
+  - Request permissions and configure Android channel on app startup
+  - Notifications always fire regardless of soundAndVibrationEnabled setting
+  - Files: `src/services/notification-service.ts`, `src/stores/timer-store.ts`, `src/app/_layout.tsx`, `app.config.ts`
+
+- [ ] **Task 17: Add sound and vibration feedback**
   - Session start/end sounds
   - Break start/end sounds
   - Haptic feedback
@@ -179,8 +187,8 @@ Enhancements for production readiness.
 | Phase 4: Focus Session      | 2      | 2         |
 | Phase 5: Session Completion | 3      | 3         |
 | Phase 6: History Feature    | 1      | 1         |
-| Phase 7: Polish             | 3      | 1         |
-| **Total**                   | **16** | **14**    |
+| Phase 7: Polish             | 4      | 3         |
+| **Total**                   | **17** | **16**    |
 
 ---
 

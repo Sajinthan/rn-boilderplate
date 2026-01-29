@@ -46,7 +46,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { PortalProvider } from '@gorhom/bottom-sheet';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { AuthenticationGuard, Toast, TermsAcceptanceModal } from '@/components';
 
 import '../global.css';
@@ -200,12 +200,7 @@ const TabbedScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-background">
       <View className="px-4 pt-4">
-        <Tab
-          activeTabIndex={activeTabIndex}
-          routes={routes}
-          onTabPress={setActiveTabIndex}
-          variant="rounded"
-        />
+        <Tab activeTabIndex={activeTabIndex} routes={routes} onTabPress={setActiveTabIndex} variant="rounded" />
       </View>
       {renderScene({ route: routes[activeTabIndex] })}
     </SafeAreaView>
@@ -234,11 +229,7 @@ const MyScreen = () => {
       <ScrollView className="flex-1 px-4 pt-20">
         <Text className="text-2xl font-bold text-foreground">Screen Title</Text>
         {/* Content */}
-        <Button
-          title="Next"
-          onPress={() => router.push('/next-screen')}
-          className="mt-4"
-        />
+        <Button title="Next" onPress={() => router.push('/next-screen')} className="mt-4" />
       </ScrollView>
     </SafeAreaView>
   );

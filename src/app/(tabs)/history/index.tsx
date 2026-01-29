@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 import { cn } from '@/lib/utils';
 import { type Session, type SessionOutcome, useSessionStore } from '@/stores/session-store';
 

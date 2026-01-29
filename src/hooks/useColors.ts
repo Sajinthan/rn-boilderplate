@@ -1,4 +1,4 @@
-import { useColorScheme } from './use-color-scheme';
+import { useColorScheme } from './useColorScheme';
 
 /**
  * Color values matching src/global.css CSS variables

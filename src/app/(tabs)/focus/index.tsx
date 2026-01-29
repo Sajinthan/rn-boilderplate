@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '@/components/Button';
 import ModeSelectionModal from '@/components/ModeSelectionModal';
 import ScheduleTimePicker from '@/components/ScheduleTimePicker';
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 import { useTimerStore } from '@/stores/timer-store';
 
 /**

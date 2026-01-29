@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Layout } from '@/constants/theme';
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 
 export default function TabLayout() {
   const colors = useColors();

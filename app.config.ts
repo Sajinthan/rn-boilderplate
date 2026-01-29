@@ -33,6 +33,12 @@ export default {
       'expo-font',
       'expo-web-browser',
       [
+        'expo-notifications',
+        {
+          sounds: [],
+        },
+      ],
+      [
         'expo-splash-screen',
         {
           image: './src/assets/images/splash-icon.png',

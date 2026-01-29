@@ -3,7 +3,7 @@
  * https://docs.expo.dev/guides/color-schemes/
  */
 
-import { ThemeColors, useColors } from './use-colors';
+import { ThemeColors, useColors } from './useColors';
 
 export function useThemeColor(props: { light?: string; dark?: string }, colorName: keyof ThemeColors) {
   const colors = useColors();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Text, View } from 'react-native';
 
-import { useColors } from '@/hooks/use-colors';
+import { useColors } from '@/hooks/useColors';
 
 /**
  * Props for the SettingsItem component

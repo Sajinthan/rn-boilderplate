@@ -21,8 +21,8 @@ src/hooks/
 ├── usePrevious.ts         # Previous value hook
 ├── useToggle.ts           # Toggle state hook
 ├── useKeyboard.ts         # Keyboard detection
-├── use-color-scheme.ts    # Color scheme detection
-└── use-theme-color.ts     # Theme color utilities
+├── useColorScheme.ts      # Color scheme detection
+└── useThemeColor.ts       # Theme color utilities
 ```
 
 ## Timer Hooks
@@ -747,12 +747,12 @@ const AccordionItem = ({ title, children }) => {
 
 ## Platform Hooks
 
-### use-color-scheme Hook
+### useColorScheme Hook
 
 Detect system color scheme with web variant support.
 
 ```tsx
-// src/hooks/use-color-scheme.ts
+// src/hooks/useColorScheme.ts
 import { useColorScheme as useRNColorScheme } from 'react-native';
 
 export function useColorScheme() {
@@ -761,7 +761,7 @@ export function useColorScheme() {
 ```
 
 ```tsx
-// src/hooks/use-color-scheme.web.ts
+// src/hooks/useColorScheme.web.ts
 import { useEffect, useState } from 'react';
 
 export function useColorScheme() {
@@ -788,7 +788,7 @@ export function useColorScheme() {
 **Theme Provider**
 
 ```tsx
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 
 export default function RootLayout() {
@@ -927,11 +927,11 @@ export { usePrevious } from './usePrevious';
 export { useToggle } from './useToggle';
 
 // Platform hooks
-export { useColorScheme } from './use-color-scheme';
+export { useColorScheme } from './useColorScheme';
 export { useKeyboard } from './useKeyboard';
 
 // Theme hooks (if using)
-export { useThemeColor } from './use-theme-color';
+export { useThemeColor } from './useThemeColor';
 ```
 
 ---
