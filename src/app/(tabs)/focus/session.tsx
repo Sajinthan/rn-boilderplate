@@ -1,6 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { router } from 'expo-router';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -16,7 +15,6 @@ import { useTimerStore } from '@/stores/timer-store';
  */
 export default function SessionScreen() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const navigation = useNavigation();
 
   // Recalculate timer when app returns from background
   useAppStateTimer();
@@ -49,22 +47,6 @@ export default function SessionScreen() {
     const secs = timeRemaining % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }, [timeRemaining]);
-
-  // Hide tab bar when this screen is focused
-  useFocusEffect(
-    useCallback(() => {
-      const parent = navigation.getParent();
-      parent?.setOptions({
-        tabBarStyle: { display: 'none' },
-      });
-
-      return () => {
-        parent?.setOptions({
-          tabBarStyle: undefined,
-        });
-      };
-    }, [navigation]),
-  );
 
   // Ensure session is started when screen mounts
   useEffect(() => {

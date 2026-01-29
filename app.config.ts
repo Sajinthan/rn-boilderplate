@@ -12,6 +12,7 @@ export default {
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
+      bundleIdentifier: 'com.sajiron.focusflow',
     },
     android: {
       adaptiveIcon: {
@@ -21,6 +22,7 @@ export default {
         monochromeImage: './src/assets/images/android-icon-monochrome.png',
       },
       edgeToEdgeEnabled: true,
+      package: 'com.sajiron.focusflow',
       predictiveBackGestureEnabled: false,
     },
     web: {

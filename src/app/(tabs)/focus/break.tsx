@@ -1,8 +1,7 @@
-import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useRef } from 'react';
+import { router } from 'expo-router';
+import React, { useEffect, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
 
 import { useAppStateTimer } from '@/hooks/useAppStateTimer';
 import { useTimerStore } from '@/stores/timer-store';
@@ -14,7 +13,6 @@ import { useTimerStore } from '@/stores/timer-store';
  */
 export default function BreakScreen() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const navigation = useNavigation();
 
   // Recalculate timer when app returns from background
   useAppStateTimer();
@@ -23,22 +21,6 @@ export default function BreakScreen() {
   const formattedTime = useTimerStore(state => state.formattedTime);
   const tick = useTimerStore(state => state.tick);
   const skipBreak = useTimerStore(state => state.skipBreak);
-
-  // Hide tab bar when this screen is focused
-  useFocusEffect(
-    useCallback(() => {
-      const parent = navigation.getParent();
-      parent?.setOptions({
-        tabBarStyle: { display: 'none' },
-      });
-
-      return () => {
-        parent?.setOptions({
-          tabBarStyle: undefined,
-        });
-      };
-    }, [navigation]),
-  );
 
   // Start timer interval when break is running
   useEffect(() => {

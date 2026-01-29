@@ -1,3 +1,4 @@
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { Tabs } from 'expo-router';
 import { Clock, History, Settings } from 'lucide-react-native';
 import { Platform } from 'react-native';
@@ -13,6 +14,14 @@ export default function TabLayout() {
   // Tab bar height: 80px + safe area bottom
   const tabBarHeight = Layout.navHeight + (Platform.OS === 'ios' ? 0 : insets.bottom);
 
+  const defaultTabBarStyle = {
+    height: tabBarHeight,
+    paddingTop: 8,
+    backgroundColor: colors.background,
+    borderTopColor: colors.border,
+    borderTopWidth: 1,
+  };
+
   return (
     <Tabs
       screenOptions={{
@@ -25,13 +34,7 @@ export default function TabLayout() {
           fontSize: 12,
           marginTop: 4,
         },
-        tabBarStyle: {
-          height: tabBarHeight,
-          paddingTop: 8,
-          backgroundColor: colors.background,
-          borderTopColor: colors.border,
-          borderTopWidth: 1,
-        },
+        tabBarStyle: defaultTabBarStyle,
         tabBarIconStyle: {
           marginTop: 4,
         },
@@ -39,9 +42,14 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="focus"
-        options={{
-          title: 'Focus',
-          tabBarIcon: ({ color, size }) => <Clock color={color} size={size} />,
+        options={({ route }) => {
+          const focusedRoute = getFocusedRouteNameFromRoute(route);
+          const hideTabBar = focusedRoute === 'session' || focusedRoute === 'break';
+          return {
+            title: 'Focus',
+            tabBarIcon: ({ color, size }) => <Clock color={color} size={size} />,
+            tabBarStyle: hideTabBar ? { display: 'none' as const } : defaultTabBarStyle,
+          };
         }}
       />
       <Tabs.Screen
