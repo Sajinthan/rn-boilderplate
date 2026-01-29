@@ -133,7 +133,7 @@ Break and reflection after focus session.
 
 View past sessions.
 
-- [ ] **Task 13: Build History screen with session list**
+- [x] **Task 13: Build History screen with session list**
   - Title: "History"
   - Summary card: "Today" / "X / Y" / "sessions completed"
   - Filter chips: "Today", "7 days"
@@ -178,9 +178,9 @@ Enhancements for production readiness.
 | Phase 3: Task Commitment    | 3      | 3         |
 | Phase 4: Focus Session      | 2      | 2         |
 | Phase 5: Session Completion | 3      | 3         |
-| Phase 6: History Feature    | 1      | 0         |
+| Phase 6: History Feature    | 1      | 1         |
 | Phase 7: Polish             | 3      | 0         |
-| **Total**                   | **16** | **12**    |
+| **Total**                   | **16** | **13**    |
 
 ---
 
